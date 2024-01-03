@@ -6,6 +6,7 @@
 #include <time.h>
 #include<cmath> 
 
+
 class Ball {
     public:
         float x;

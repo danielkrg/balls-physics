@@ -1,0 +1,3 @@
+/Users/petersalnikov/Local/Personal/balls-physics/build/CMakeFiles/balls.dir
+/Users/petersalnikov/Local/Personal/balls-physics/build/CMakeFiles/edit_cache.dir
+/Users/petersalnikov/Local/Personal/balls-physics/build/CMakeFiles/rebuild_cache.dir

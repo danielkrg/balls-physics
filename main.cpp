@@ -26,7 +26,7 @@ bool checkWalls(float x, int winX, float rad) {
     return (static_cast<int>(x) + 2*rad >= winX || static_cast<int>(x) <= 0);
 }
 
-void moveBall(Ball ball, float g, int winX, int winY) {
+void moveBall(Ball& ball, float g, int winX, int winY) {
         ball.drawing.move(ball.velY, ball.velY);
         ball.t += 0.001;
         ball.velY = ball.initVelY + g*ball.t;
@@ -82,9 +82,11 @@ int main()
 
         window.clear();
 
-        for (int i = 0; i < 10; i++) {
-            moveBall(balls[i], g, winX, winY);
-            window.draw(balls[i].drawing);
+        // for (int i = 0; i < 10; i++) {
+        for(auto& ball : balls) {
+            moveBall(ball, g, winX, winY);
+            // moveBall(balls[i], g, winX, winY);
+            window.draw(ball.drawing);
         }
 
         window.display();

@@ -28,7 +28,7 @@ bool checkWalls(float x, int winX, float rad) {
 }
 
 void moveBall(Ball& ball, float g, int winX, int winY) {
-        ball.drawing.move(ball.velY, ball.velY);
+        ball.drawing.move(ball.velX, ball.velY);
         ball.t += 0.001;
         ball.velY = ball.initVelY + g*ball.t;
 
@@ -83,10 +83,8 @@ int main()
 
         window.clear();
 
-        // for (int i = 0; i < 10; i++) {
         for(auto& ball : balls) {
             moveBall(ball, g, winX, winY);
-            // moveBall(balls[i], g, winX, winY);
             window.draw(ball.drawing);
         }
 

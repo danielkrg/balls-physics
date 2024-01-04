@@ -54,10 +54,10 @@ RM = /opt/homebrew/Cellar/cmake/3.28.1/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/petersalnikov/Local/Personal/balls-physics
+CMAKE_SOURCE_DIR = "/Users/daniel/Documents/SFML Gravity"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/petersalnikov/Local/Personal/balls-physics/build
+CMAKE_BINARY_DIR = "/Users/daniel/Documents/SFML Gravity/build"
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -81,14 +81,14 @@ clean: CMakeFiles/balls.dir/clean
 CMakeFiles/balls.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/balls.dir/build.make CMakeFiles/balls.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/balls.dir/build.make CMakeFiles/balls.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/petersalnikov/Local/Personal/balls-physics/build/CMakeFiles --progress-num=1,2 "Built target balls"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/Users/daniel/Documents/SFML Gravity/build/CMakeFiles" --progress-num=1,2 "Built target balls"
 .PHONY : CMakeFiles/balls.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/balls.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/petersalnikov/Local/Personal/balls-physics/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/daniel/Documents/SFML Gravity/build/CMakeFiles" 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/balls.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/petersalnikov/Local/Personal/balls-physics/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/daniel/Documents/SFML Gravity/build/CMakeFiles" 0
 .PHONY : CMakeFiles/balls.dir/rule
 
 # Convenience name for target.

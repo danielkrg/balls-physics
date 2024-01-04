@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/Users/petersalnikov/Local/Personal/balls-physics/main.cpp" "CMakeFiles/balls.dir/main.cpp.o" "gcc" "CMakeFiles/balls.dir/main.cpp.o.d"
+  "/Users/daniel/Documents/SFML Gravity/main.cpp" "CMakeFiles/balls.dir/main.cpp.o" "gcc" "CMakeFiles/balls.dir/main.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

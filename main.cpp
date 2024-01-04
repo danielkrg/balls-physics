@@ -61,9 +61,9 @@ int main()
         ball.x = startX;
         ball.y = startY;
         ball.t = 0;
-        ball.initVelY = -1*((double)(rand()%3)/10);
+        ball.initVelY = -1*((double)(rand()%3)/10) - 0.1;
         ball.velY = ball.initVelY;
-        ball.velX = pow(-1, rand()%2)*((double)(rand()%3)/10);
+        ball.velX = pow(-1, rand()%2)*((double)(rand()%3)/10 + 0.05);
         ball.rad = rand()%3 + 2; 
         sf::CircleShape shape(ball.rad);
         ball.drawing = shape;

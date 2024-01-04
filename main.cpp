@@ -1,4 +1,3 @@
-#include <SFML/Graphics.hpp>
 #include <string>
 #include <iostream>
 #include <stdio.h>
@@ -6,18 +5,7 @@
 #include <time.h>
 #include<cmath> 
 
-
-class Ball {
-    public:
-        float x;
-        float y;
-        float initVelY;
-        float velY;
-        float velX;
-        float t;
-        float rad;
-        sf::CircleShape drawing;
-};
+#include "lib/include/ball.h"
 
 bool checkGround(float y, int winY, float rad) {
     return (static_cast<int>(y) + 2*rad >= winY - 1);

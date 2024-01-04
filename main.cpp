@@ -35,11 +35,12 @@ void moveBall(Ball& ball, float g, int winX, int winY) {
         ball.y += ball.velY;
 
         if (checkGround(ball.y, winY, ball.rad)) {
-            ball.initVelY = -0.85*ball.velY;
+            ball.initVelY = -0.80*ball.velY;
             ball.velY = ball.initVelY;
             ball.t = 0;
             ball.y = winY - 2*ball.rad;
             ball.drawing.setPosition(ball.x, ball.y);
+            ball.velX *= 0.9995;
         }
 
         if (checkWalls(ball.x, winX, ball.rad)) {
@@ -49,15 +50,15 @@ void moveBall(Ball& ball, float g, int winX, int winY) {
 
 int main()
 {
-    int NUM_BALLS = 1;
+    int NUM_BALLS = 100;
 
     int winX = 800;
     int winY = 700;
     sf::RenderWindow window(sf::VideoMode(winX, winY), "balls");
     float rad = 5.0;
 
-    int startX = 300;
-    int startY = 300;
+    int startX = 400;
+    int startY = 600;
     float g = 0.0981;
     srand(time(NULL));
 
@@ -67,13 +68,16 @@ int main()
         ball.x = startX;
         ball.y = startY;
         ball.t = 0;
-        ball.initVelY = -1*((double)(rand()%3)/10) - 0.1;
+        ball.initVelY = -1*((double)(rand()%300)/1000) - 0.1;
         ball.velY = ball.initVelY;
-        ball.velX = pow(-1, rand()%2)*((double)(rand()%3)/10 + 0.05);
+        ball.velX = pow(-1, rand()%2)*((double)(rand()%200)/1000 + 0.05);
         ball.rad = rand()%3 + 2; 
         sf::CircleShape shape(ball.rad);
         ball.drawing = shape;
-        ball.drawing.setFillColor(sf::Color::White);
+        int r = rand()%256;
+        int g = rand()%256;
+        int b = rand()%256;
+        ball.drawing.setFillColor(sf::Color(r, g, b));
         ball.drawing.setPosition(sf::Vector2f(startX, startY));
         balls[i] = ball;
     }

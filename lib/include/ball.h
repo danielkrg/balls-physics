@@ -82,7 +82,6 @@ class Ball {
                 initVelY = -0.80*velY;
                 velY = initVelY;
                 time = 0;
-                sf::Vector2f pos = getPos();
                 drawing.setPosition(getPos().x, getPos().y - getRad());
                 velX *= 0.9995;
             }

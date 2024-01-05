@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include<cmath> 
-
+#include"lib/include/collision.h"
 #include "lib/include/ball.h"
 
 bool checkGround(float y, int winY, float rad) {
@@ -93,18 +93,20 @@ int main()
 
         for(auto& ball : balls) {
             moveBall(ball, g, winX, winY);
-            window.draw(ball.drawing);
+            // window.draw(ball.drawing);
         }
         // if(count % 10 == 0)
-        // {
-        //     for(auto& ball1 : balls)
-        //     {
-        //         for(auto& ball2 : balls)
-        //         {
-        //             // resolve_collisions(ball1,ball2);
-        //         }
-        //     }
-        // }
+        {
+            for(auto& ball1 : balls)
+            {
+                for(auto& ball2 : balls)
+                {
+                    resolve_collisions(ball1,ball2);
+                    window.draw(ball1.drawing);
+                    window.draw(ball2.drawing);
+                }
+            }
+        }
         // count++;
 
         window.display();

@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <cmath> 
+#include <vector>
 
 #include "lib/include/ball.h"
 #include "lib/ball.cpp"
@@ -12,7 +13,7 @@
 
 int main()
 {
-    int NUM_BALLS = 100;
+    int NUM_BALLS = 1;
 
     int winX = 800;
     int winY = 700;
@@ -22,10 +23,12 @@ int main()
     int startX = 400;
     int startY = 600;
     float g = 0.0981;
-    srand(time(NULL));
 
-    Ball balls[NUM_BALLS];
-    initBalls(balls, NUM_BALLS, startX, startY);
+    std::vector<Ball*> balls;
+    for (int i = 0; i < NUM_BALLS; i++) {
+        Ball* ball = new Ball(-0.2, 0.2, 5, startX, startY);
+        balls.push_back(ball);
+    }
 
     while (window.isOpen())
     {
@@ -38,9 +41,19 @@ int main()
 
         window.clear();
 
-        for(auto& ball : balls) {
-            moveBall(ball, g, winX, winY);
-            window.draw(ball.drawing);
+        for(auto ball : balls) {
+            ball->move(g, winX, winY);
+            window.draw(ball->getDrawing());
+        }
+
+        for (auto ball1 : balls)
+        {
+            for(auto ball2 : balls)
+            {
+                resolve_collisions(ball1 ,ball2);
+                // window.draw(ball1.drawing);
+                // window.draw(ball2.drawing);
+            }
         }
 
         window.display();

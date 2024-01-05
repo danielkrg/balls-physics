@@ -3,6 +3,7 @@
 
 class Ball {
     public:
+        int id;
         float x;
         float y;
         float initVelY;

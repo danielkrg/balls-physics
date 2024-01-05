@@ -26,7 +26,7 @@ void moveBall(Ball& ball, float g, int winX, int winY) {
             ball.initVelY = -0.80*ball.velY;
             ball.velY = ball.initVelY;
             ball.t = 0;
-            ball.y = winY - 2*ball.rad;
+            ball.y = winY - ball.rad;
             ball.drawing.setPosition(ball.x, ball.y);
             ball.velX *= 0.9995;
         }
@@ -38,7 +38,7 @@ void moveBall(Ball& ball, float g, int winX, int winY) {
 
 int main()
 {
-    int NUM_BALLS = 100;
+    int NUM_BALLS = 5;
 
     int winX = 800;
     int winY = 700;
@@ -59,8 +59,9 @@ int main()
         ball.initVelY = -1*((double)(rand()%300)/1000) - 0.1;
         ball.velY = ball.initVelY;
         ball.velX = pow(-1, rand()%2)*((double)(rand()%200)/1000 + 0.05);
-        ball.rad = rand()%3 + 2; 
+        ball.rad = rand()%3 + 20; 
         sf::CircleShape shape(ball.rad);
+        shape.setOrigin(shape.getRadius(),shape.getRadius());
         ball.drawing = shape;
         int r = rand()%256;
         int g = rand()%256;
@@ -70,6 +71,8 @@ int main()
         balls[i] = ball;
     }
 
+    // int count = 0;
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -77,14 +80,32 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+            if(event.type == sf::Event::KeyPressed)
+                window.close();
         }
 
         window.clear();
+
+        // for(auto& ball1 : balls) {
+        //     moveBall(ball1, g, winX, winY);
+        //     window.draw(ball1.drawing);
+        // }
 
         for(auto& ball : balls) {
             moveBall(ball, g, winX, winY);
             window.draw(ball.drawing);
         }
+        // if(count % 10 == 0)
+        // {
+        //     for(auto& ball1 : balls)
+        //     {
+        //         for(auto& ball2 : balls)
+        //         {
+        //             // resolve_collisions(ball1,ball2);
+        //         }
+        //     }
+        // }
+        // count++;
 
         window.display();
     }

@@ -38,7 +38,7 @@ void moveBall(Ball& ball, float g, int winX, int winY) {
 
 int main()
 {
-    int NUM_BALLS = 5;
+    int NUM_BALLS = 100;
 
     int winX = 800;
     int winY = 700;
@@ -59,7 +59,7 @@ int main()
         ball.initVelY = -1*((double)(rand()%300)/1000) - 0.1;
         ball.velY = ball.initVelY;
         ball.velX = pow(-1, rand()%2)*((double)(rand()%200)/1000 + 0.05);
-        ball.rad = rand()%3 + 20; 
+        ball.rad = rand()%3 + 10; 
         sf::CircleShape shape(ball.rad);
         shape.setOrigin(shape.getRadius(),shape.getRadius());
         ball.drawing = shape;
@@ -91,22 +91,24 @@ int main()
         //     window.draw(ball1.drawing);
         // }
 
+        // if(count % 10 == 0)
+        {
         for(auto& ball : balls) {
             moveBall(ball, g, winX, winY);
             // window.draw(ball.drawing);
         }
-        // if(count % 10 == 0)
-        {
             for(auto& ball1 : balls)
             {
                 for(auto& ball2 : balls)
                 {
                     resolve_collisions(ball1,ball2);
-                    window.draw(ball1.drawing);
-                    window.draw(ball2.drawing);
+                    // window.draw(ball1.drawing);
+                    // window.draw(ball2.drawing);
                 }
             }
         }
+        for(auto& ball : balls)
+            window.draw(ball.drawing);
         // count++;
 
         window.display();

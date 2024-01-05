@@ -20,7 +20,7 @@ add_subdirectory(lib/tests)
 target_link_libraries(balls PRIVATE ball collision)
 
 
-set_target_properties(balls PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+# set_target_properties(balls PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 # add_executable(collision_test lib/tests/collision_test.cpp)
 # target_include_directories(collision_test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} lib/include)
 # target_link_libraries(collision_test PRIVATE collision)

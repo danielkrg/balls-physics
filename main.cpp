@@ -44,6 +44,9 @@ int main()
 
         window.clear();
 
+        for(auto& ball : balls) {
+            ball.move(g, winX, winY);
+        }
         for (auto& ball1 : balls)
         {
             for(auto& ball2 : balls)
@@ -54,11 +57,8 @@ int main()
             }
         }
 
-        for(auto& ball : balls) {
-            ball.move(g, winX, winY);
+        for(auto& ball : balls)
             window.draw(ball.getDrawing());
-        }
-
 
         window.display();
     }

@@ -5,22 +5,23 @@
 
 class Ball {
     public:
-        Ball(float initVY, float vX, float rad, float startX, float startY) {
+        Ball(double initVY, double vX, double rad, double startX, double startY) {
             initVelY = initVY;
             velY = initVY;
             velX = vX;
             time = 0;
             sf::CircleShape shape(rad);
             shape.setFillColor(sf::Color::White);
+            shape.setOrigin(shape.getRadius(),shape.getRadius());
             shape.setPosition(startX, startY);
             drawing = shape;
         }
         
         sf::Vector2f getPos() {
-            return drawing.getPosition() + sf::Vector2f(getRad(), getRad());
+            return drawing.getPosition();// + sf::Vector2f(getRad(), getRad());
         }
 
-        void setPos(float x, float y) {
+        void setPos(double x, double y) {
             drawing.setPosition(x, y);
         }
 
@@ -28,28 +29,28 @@ class Ball {
             return sf::Vector2f(velX, velY);
         }
 
-        void setVel(float vX, float vY) {
+        void setVel(double vX, double vY) {
             velX = vX;
             velY = vY;
         }
 
-        float getRad() {
+        double getRad() {
             return drawing.getRadius();
         } 
 
-        float getInitVelY() {
+        double getInitVelY() {
             return initVelY;
         }
 
-        void setInitVelY(float initvY) {
+        void setInitVelY(double initvY) {
             initVelY = initvY;
         }
 
-        float getT() {
+        double getT() {
             return time;
         }
 
-        void setT(float t) {
+        void setT(double t) {
             time = t;
         }
 
@@ -73,28 +74,28 @@ class Ball {
             return (getPos().x + getRad() >= winX);
         }
 
-        void move(float g, int winX, int winY) {
-            drawing.move(velX, velY);
+        void move(double g, int winX, int winY) {
             time += 0.001;
             velY = initVelY + g*time;
 
             if (checkGround(winY)) {
-                initVelY = -0.80*velY;
+                initVelY = -0.8*velY;
                 velY = initVelY;
                 time = 0;
-                drawing.setPosition(getPos().x, getPos().y - getRad());
+                // drawing.setPosition(getPos().x, getPos().y - getRad());
                 velX *= 0.9995;
             }
 
             if (checkLeftWall() || checkRightWall(winX)) {
                 velX *= -1;
             }
+            drawing.move(velX, velY);
         }
     
     private:
-        float initVelY;
-        float velY;
-        float velX;
-        float time;
+        double initVelY;
+        double velY;
+        double velX;
+        double time;
         sf::CircleShape drawing;
 };

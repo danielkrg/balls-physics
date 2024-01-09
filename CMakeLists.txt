@@ -16,6 +16,7 @@ target_link_libraries(balls PRIVATE sfml-graphics sfml-window sfml-system)
 # Add the subdirectory containing the library
 add_subdirectory(lib)
 add_subdirectory(lib/tests)
+# target_link_libraries(balls PRIVATE sfml-graphics sfml-window sfml-system)
 
 target_link_libraries(balls PRIVATE ball collision)
 

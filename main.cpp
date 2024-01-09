@@ -3,10 +3,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "include/ball.h"
+#include "include/collision.h"
 
 int main()
 {
-    int NUM_BALLS = 1;
+    int NUM_BALLS = 25;
 
     int winX = 800;
     int winY = 700;
@@ -49,7 +51,7 @@ int main()
         // }
 
         // if(count % 10 == 0)
-        {
+        
         for(auto& ball : balls) {
 
             ball.move(g, winX, winY);
@@ -69,6 +71,7 @@ int main()
 
 
         window.display();
+    
     }
 
     return 0;

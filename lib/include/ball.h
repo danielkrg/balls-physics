@@ -5,6 +5,7 @@
 
 class Ball {
     public:
+
         Ball(double initVY, double vX, double rad, double startX, double startY) {
             initVelY = initVY;
             velY = initVY;
@@ -97,5 +98,6 @@ class Ball {
         double velY;
         double velX;
         double time;
+
         sf::CircleShape drawing;
 };

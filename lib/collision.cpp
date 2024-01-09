@@ -1,3 +1,4 @@
+
 #include "collision.h"
 void resolve_collisions(Ball& obj_1, Ball& obj_2)
 {
@@ -41,6 +42,7 @@ void resolve_collisions(Ball& obj_1, Ball& obj_2)
                 move_y_1 = 0;
                 move_y_2 = 0;
             }
+
             obj_1.moveDrawing(move_x_1,move_y_1);
             obj_2.moveDrawing(move_x_2,move_y_2);
 

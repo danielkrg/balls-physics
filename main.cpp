@@ -3,13 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <cmath> 
-#include <vector>
-
-#include "lib/include/ball.h"
-#include "lib/ball.cpp"
-#include "lib/collision.h"
-#include "lib/collision.cpp"
 
 int main()
 {
@@ -26,12 +19,16 @@ int main()
 
     std::vector<Ball> balls;
     for (int i = 0; i < NUM_BALLS; i++) {
+
         float initVelY = -0.2;
         float velX = 0.2;
         float rad = 5;
         Ball ball(initVelY, velX, rad, startX, startY);
         balls.push_back(ball);
+
     }
+
+    // int count = 0;
 
     while (window.isOpen())
     {
@@ -40,11 +37,21 @@ int main()
         {
             if (event.type == sf::Event::Closed || event.type == sf::Event::KeyPressed)
                 window.close();
+            if(event.type == sf::Event::KeyPressed)
+                window.close();
         }
 
         window.clear();
 
+        // for(auto& ball1 : balls) {
+        //     moveBall(ball1, g, winX, winY);
+        //     window.draw(ball1.drawing);
+        // }
+
+        // if(count % 10 == 0)
+        {
         for(auto& ball : balls) {
+
             ball.move(g, winX, winY);
         }
         for (auto& ball1 : balls)
@@ -59,6 +66,7 @@ int main()
 
         for(auto& ball : balls)
             window.draw(ball.getDrawing());
+
 
         window.display();
     }

@@ -80,7 +80,7 @@ class Ball {
         // bool checkLeftWall() {
         double checkLeftWall() {
             // return (getPos().x <= 0);
-            return (getPos().x);
+            return (getPos().x - getRad());
         }
 
         // bool checkRightWall(int winX) {
@@ -107,7 +107,7 @@ class Ball {
 
             if (checkLeftWall() < 0) {
                 // drawing.setPosition(getRad(), getPos().y);
-                moveX = getPos().x - getRad();
+                moveX = getPos().x;
                 velX *= -0.95;
 
             }

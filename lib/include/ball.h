@@ -2,6 +2,9 @@
 #include<SFML/Graphics.hpp> 
 #include <cmath> 
 #include <time.h>
+#include<random>
+
+
 
 class Ball {
     public:
@@ -11,7 +14,11 @@ class Ball {
             velX = vX;
             time = 0;
             sf::CircleShape shape(rad);
-            shape.setFillColor(sf::Color::White);
+            std::random_device rd;
+            std::mt19937 gen(rd());
+            std::uniform_int_distribution<> dis(0,255);
+            shape.setFillColor(sf::Color(dis(gen),dis(gen),dis(gen)));
+            // shape.setFillColor(sf::Color::White);
             shape.setOrigin(shape.getRadius(),shape.getRadius());
             shape.setPosition(startX, startY);
             drawing = shape;
@@ -62,16 +69,24 @@ class Ball {
             drawing.move(x, y);
         }
         
-        bool checkGround(int winY) {
-            return (getPos().y + getRad() + velY >= winY);
+
+        // bool checkGround(int winY) {
+        double checkGround(int winY) {
+            // return (getPos().y + getRad() >= winY);
+            return (winY - (getPos().y + getRad()));
         }
 
-        bool checkLeftWall() {
-            return (getPos().x - getRad() + velX <= 0);
+        // bool checkLeftWall() {
+        double checkLeftWall() {
+            // return (getPos().x <= 0);
+            return (getPos().x);
         }
 
-        bool checkRightWall(int winX) {
-            return (getPos().x + getRad() + velX >= winX);
+        // bool checkRightWall(int winX) {
+        double checkRightWall(int winX) {
+            // return (getPos().x + getRad() >= winX);
+            return (winX - (getPos().x + getRad()));
+
         }
 
         void move(double g, int winX, int winY) {
@@ -80,22 +95,23 @@ class Ball {
             float moveX = velX;
             float moveY = velY;
 
-            if (checkGround(winY)) {
-                initVelY = -0.8*velY;
-                velY = initVelY;
+            if (checkGround(winY) < 0) {
+                initVelY = -0.8*abs(velY);
+                velY = initVelY + checkGround(winY);
                 time = 0;
                 // drawing.setPosition(getPos().x, winY - getRad());
                 moveY = winY - getPos().y - getRad();
                 velX *= 0.995;
             }
 
-            if (checkLeftWall()) {
+            if (checkLeftWall() < 0) {
                 // drawing.setPosition(getRad(), getPos().y);
                 moveX = getPos().x - getRad();
                 velX *= -0.95;
+
             }
 
-            if (checkRightWall(winX)) {
+            if (checkRightWall(winX) < 0) {
                 // drawing.setPosition(winX - getRad(), getPos().y);
                 moveX = winX - getPos().x - getRad();
                 velX *= -0.95;

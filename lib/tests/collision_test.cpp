@@ -22,25 +22,13 @@ int main()
     c2.setPosition(320,210);
 
     std::vector<Ball> balls;
+// Ball(double initVY, double vX, double rad, double startX, double startY)
+    Ball b1{-1*((double)(rand()%300)/1000) - 0.1,pow(-1, rand()%2)*((double)(rand()%200)/1000 + 0.05),
+    50.f,300,200};
 
-    Ball b1;
-        b1.id = 1;
-        b1.x = 300;
-        b1.y = 200;
-        b1.t = 0;
-        b1.initVelY = -1*((double)(rand()%300)/1000) - 0.1;
-        b1.velY = b1.initVelY;
-        b1.velX = pow(-1, rand()%2)*((double)(rand()%200)/1000 + 0.05);
-        b1.drawing = c1;
-    Ball b2;
-        b2.id = 0;
-        b2.x = 320;
-        b2.y = 210;
-        b2.t = 0;
-        b2.initVelY = -1*((double)(rand()%300)/1000) - 0.1;
-        b2.velY = b2.initVelY;
-        b2.velX = pow(-1, rand()%2)*((double)(rand()%200)/1000 + 0.05);
-        b2.drawing = c2;
+    Ball b2{-1*((double)(rand()%300)/1000) - 0.1,pow(-1, rand()%2)*((double)(rand()%200)/1000 + 0.05),
+    50.f,320,210};
+
 
     balls.push_back(b1);
     balls.push_back(b2);
@@ -66,13 +54,10 @@ int main()
             // ball1.drawing.move(0.1f,0.1f);
             for(auto& ball2 : balls)
             {
-                if(ball1.id != ball2.id)
-                {
                 // ball2.drawing.move(-0.1f,-0.1f);
                     resolve_collisions(ball1,ball2);
-                    w.draw(ball1.drawing);
-                    w.draw(ball2.drawing);
-                }
+                    w.draw(ball1.getDrawing());
+                    w.draw(ball2.getDrawing());
             }
         }
 

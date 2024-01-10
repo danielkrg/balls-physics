@@ -10,9 +10,7 @@
 
 #include "lib/include/ball.h"
 #include "lib/ball.cpp"
-#include "lib/collision.h"
-#include "lib/collision.cpp"
-
+#include "lib/include/collision.h"
 
 int main()
 {
@@ -89,7 +87,7 @@ int main()
         // }
 
         // if(count % 10 == 0)
-        {
+        
         for(auto& ball : balls) {
 
             ball.move(g, winX, winY);

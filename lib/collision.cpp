@@ -3,6 +3,9 @@
 void resolve_collisions(Ball& obj_1, Ball& obj_2)
 {
 
+    if(&obj_1 == &obj_2)
+        return;
+
         double x_1 = obj_1.getPos().x;
         double x_2 = obj_2.getPos().x;
 

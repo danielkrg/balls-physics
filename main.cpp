@@ -5,6 +5,7 @@
 #include <time.h>
 #include <cmath> 
 #include <vector>
+#include<random>
 
 #include "lib/include/ball.h"
 #include "lib/ball.cpp"
@@ -13,25 +14,35 @@
 
 int main()
 {
-    int NUM_BALLS = 1;
+    int NUM_BALLS = 100;
 
     int winX = 800;
     int winY = 700;
     sf::RenderWindow window(sf::VideoMode(winX, winY), "balls");
-    float rad = 5.0;
+    double rad = 5.0;
 
     int startX = 400;
-    int startY = 600;
-    float g = 0.0981;
+    // int startY = 600;
+    int startY = 300;
+    double g = 0.0981;
+
+    // std::random_device rd;
+    std::mt19937 gen(0);
+    std::uniform_real_distribution<> dis(-0.1f,0.1f);
 
     std::vector<Ball> balls;
-    for (int i = 0; i < NUM_BALLS; i++) {
-        float initVelY = -0.2;
-        float velX = 0.2;
-        float rad = 5;
-        Ball ball(initVelY, velX, rad, startX, startY);
-        balls.push_back(ball);
-    }
+    // for (int i = 0; i < NUM_BALLS; i++) {
+        double initVelY = -0.2;
+        // double velX = 0.2;
+        double velX = 0.01f;
+        // double rad = 5;
+    //     // Ball ball(initVelY, velX, rad, startX, startY);
+    //     // balls.push_back(ball);
+    //     balls.push_back(Ball(initVelY, velX, rad, startX, startY));
+    //     sf::sleep(sf::Time(sf::microseconds(10000)));
+    // }
+
+    int count = 0;
 
     while (window.isOpen())
     {
@@ -41,6 +52,15 @@ int main()
             if (event.type == sf::Event::Closed || event.type == sf::Event::KeyPressed)
                 window.close();
         }
+
+        if(count <= NUM_BALLS * 10)
+        {
+            if(count % 10 == 0)
+                balls.push_back(Ball(initVelY, dis(gen), rad, startX, startY));
+
+        }
+            // sf::sleep(sf::Time(sf::microseconds(100)));
+        count++;
 
         window.clear();
 
@@ -61,6 +81,8 @@ int main()
             window.draw(ball.getDrawing());
 
         window.display();
+
+
     }
 
     return 0;

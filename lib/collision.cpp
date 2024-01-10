@@ -1,3 +1,4 @@
+
 #include "collision.h"
 void resolve_collisions(Ball& obj_1, Ball& obj_2)
 {
@@ -54,8 +55,8 @@ should travel.
             // the t of collided particles that have not touched the ground keeps increasing,
             // so they eventually shoot up high into the air.
 
-            obj_1.setVel(obj_1.getVel().x * swap_x, obj_1.getInitVelY());
-            obj_2.setVel(obj_2.getVel().x * swap_x, obj_2.getInitVelY());
+//             obj_1.setVel(obj_1.getVel().x * swap_x, obj_1.getInitVelY());
+//             obj_2.setVel(obj_2.getVel().x * swap_x, obj_2.getInitVelY());
 
             obj_1.moveDrawing(move_x_1,move_y_1);
             obj_2.moveDrawing(move_x_2,move_y_2);

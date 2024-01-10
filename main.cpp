@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+
 #include <cmath> 
 #include <vector>
 #include<random>
@@ -11,6 +12,7 @@
 #include "lib/ball.cpp"
 #include "lib/collision.h"
 #include "lib/collision.cpp"
+
 
 int main()
 {
@@ -57,6 +59,7 @@ int main()
 //         balls.push_back(ball);
 //     }
 
+    // int count = 0;
 
     while (window.isOpen())
     {
@@ -64,6 +67,8 @@ int main()
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed || event.type == sf::Event::KeyPressed)
+                window.close();
+            if(event.type == sf::Event::KeyPressed)
                 window.close();
         }
 
@@ -78,7 +83,15 @@ int main()
 
         window.clear();
 
+        // for(auto& ball1 : balls) {
+        //     moveBall(ball1, g, winX, winY);
+        //     window.draw(ball1.drawing);
+        // }
+
+        // if(count % 10 == 0)
+        {
         for(auto& ball : balls) {
+
             ball.move(g, winX, winY);
         }
         for (auto& ball1 : balls)
@@ -93,6 +106,7 @@ int main()
 
         for(auto& ball : balls)
             window.draw(ball.getDrawing());
+
 
         window.display();
 

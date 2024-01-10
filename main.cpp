@@ -30,7 +30,10 @@ int main()
     std::mt19937 gen(0);
     std::uniform_real_distribution<> dis(-0.1f,0.1f);
 
+    srand(time(NULL));
+
     std::vector<Ball> balls;
+
     // for (int i = 0; i < NUM_BALLS; i++) {
         double initVelY = -0.2;
         // double velX = 0.2;
@@ -43,6 +46,17 @@ int main()
     // }
 
     int count = 0;
+
+//     for (int i = 0; i < NUM_BALLS; i++) {
+//         // float initVelY = -0.3;
+//         float initVelY = -1*((double)(rand()%300)/1000) - 0.1;
+//         // float velX = 0.5;
+//         float velX = pow(-1, rand()%2)*((double)(rand()%200)/1000 + 0.05);
+//         float rad = 5;
+//         Ball ball(initVelY, velX, rad, startX, startY);
+//         balls.push_back(ball);
+//     }
+
 
     while (window.isOpen())
     {

@@ -69,6 +69,7 @@ class Ball {
             drawing.move(x, y);
         }
         
+
         // bool checkGround(int winY) {
         double checkGround(int winY) {
             // return (getPos().y + getRad() >= winY);
@@ -85,34 +86,38 @@ class Ball {
         double checkRightWall(int winX) {
             // return (getPos().x + getRad() >= winX);
             return (winX - (getPos().x + getRad()));
+
         }
 
         void move(double g, int winX, int winY) {
             time += 0.001;
             velY = initVelY + g*time;
+            float moveX = velX;
+            float moveY = velY;
 
             if (checkGround(winY) < 0) {
                 initVelY = -0.8*abs(velY);
                 velY = initVelY + checkGround(winY);
                 time = 0;
-                // drawing.setPosition(getPos().x, getPos().y - getRad());
-                velX *= 0.9995;
+                // drawing.setPosition(getPos().x, winY - getRad());
+                moveY = winY - getPos().y - getRad();
+                velX *= 0.995;
             }
 
-            // if (checkLeftWall() || checkRightWall(winX)) {
-            //     velX *= -1;
-            // }
-            if(checkLeftWall() < 0)
-            {
-                velX *= -1;
-                drawing.setPosition(0, getPos().y);
+            if (checkLeftWall() < 0) {
+                // drawing.setPosition(getRad(), getPos().y);
+                moveX = getPos().x - getRad();
+                velX *= -0.95;
+
             }
-            if(checkRightWall(winX) < 0)
-            {
-                velX *= -1;
-                drawing.setPosition(winX-getRad(),getPos().y);
+
+            if (checkRightWall(winX) < 0) {
+                // drawing.setPosition(winX - getRad(), getPos().y);
+                moveX = winX - getPos().x - getRad();
+                velX *= -0.95;
             }
-            drawing.move(velX, velY);
+
+            drawing.move(moveX, moveY);
         }
     
     private:

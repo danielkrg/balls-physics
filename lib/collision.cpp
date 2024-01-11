@@ -1,5 +1,6 @@
 
 #include "collision.h"
+#include <iostream>
 void resolve_collisions(Ball& obj_1, Ball& obj_2)
 {
 
@@ -60,6 +61,20 @@ should travel.
 
 //             obj_1.setVel(obj_1.getVel().x * swap_x, obj_1.getInitVelY());
 //             obj_2.setVel(obj_2.getVel().x * swap_x, obj_2.getInitVelY());
+
+            sf::Vector2f b1_vel = obj_1.getVel();
+            sf::Vector2f b2_vel = obj_2.getVel();
+
+            obj_1.setVel(b1_vel.x, move_y_1*b2_vel.y);
+            obj_2.setVel(b2_vel.x, move_y_2*b2_vel.y);
+
+            // std::cout << b1_vel.x << obj_1.getVel().x << std::endl;
+
+            obj_1.setInitVelY(move_y_1*b1_vel.y);
+            obj_2.setInitVelY(move_y_2*b2_vel.y);
+
+            obj_1.setT(0);
+            obj_2.setT(0);
 
             obj_1.moveDrawing(move_x_1,move_y_1);
             obj_2.moveDrawing(move_x_2,move_y_2);

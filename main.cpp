@@ -21,9 +21,9 @@ int main()
     sf::RenderWindow window(sf::VideoMode(winX, winY), "balls");
     double rad = 5.0;
 
-    int startX = 400;
+    int startX = 200;
     // int startY = 600;
-    int startY = 300;
+    int startY = 200;
     double g = 0.0981;
 
     // std::random_device rd;
@@ -35,9 +35,9 @@ int main()
     std::vector<Ball> balls;
 
     // for (int i = 0; i < NUM_BALLS; i++) {
-        double initVelY = -0.2;
+        double initVelY = -0.1;
         // double velX = 0.2;
-        double velX = 0.01f;
+        double velX = 0.3f;
         // double rad = 5;
     //     // Ball ball(initVelY, velX, rad, startX, startY);
     //     // balls.push_back(ball);
@@ -70,10 +70,10 @@ int main()
                 window.close();
         }
 
-        if(count <= NUM_BALLS * 10)
+        if(count <= NUM_BALLS * 100)
         {
-            if(count % 10 == 0)
-                balls.push_back(Ball(initVelY, dis(gen), rad, startX, startY));
+            if(count % 100 == 0)
+                balls.push_back(Ball(initVelY, velX, rad, startX, startY));
 
         }
             // sf::sleep(sf::Time(sf::microseconds(100)));

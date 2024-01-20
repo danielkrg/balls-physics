@@ -1,6 +1,9 @@
 
 #include "collision.h"
 #include <iostream>
+#include <cstdlib>
+#include <cmath> 
+
 void resolve_collisions(Ball& obj_1, Ball& obj_2)
 {
 
@@ -65,13 +68,21 @@ should travel.
             sf::Vector2f b1_vel = obj_1.getVel();
             sf::Vector2f b2_vel = obj_2.getVel();
 
-            obj_1.setVel(b1_vel.x, move_y_1*b2_vel.y);
-            obj_2.setVel(b2_vel.x, move_y_2*b2_vel.y);
+            double total_vel_x = abs(b1_vel.x) + abs(b2_vel.x);
+            double total_vel_y = abs(b1_vel.y) + abs(b2_vel.y);
+
+            double b1_x_sign = b1_vel.x/abs(b1_vel.x);
+            double b1_y_sign = b1_vel.y/abs(b1_vel.y);
+            double b2_x_sign = b2_vel.x/abs(b2_vel.x);
+            double b2_y_sign = b2_vel.y/abs(b2_vel.y);
+
+            obj_1.setVel(b1_x_sign*total_vel_x/2, move_y_1*total_vel_y/2);
+            obj_2.setVel(b2_x_sign*total_vel_x/2, move_y_2*total_vel_y/2);
 
             // std::cout << b1_vel.x << obj_1.getVel().x << std::endl;
 
-            obj_1.setInitVelY(move_y_1*b1_vel.y);
-            obj_2.setInitVelY(move_y_2*b2_vel.y);
+            obj_1.setInitVelY(move_y_1*total_vel_y/2);
+            obj_2.setInitVelY(move_y_2*total_vel_y/2);
 
             obj_1.setT(0);
             obj_2.setT(0);

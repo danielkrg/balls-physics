@@ -6,59 +6,46 @@
 
 #include <cmath> 
 #include <vector>
-#include<random>
+#include <random>
 
 #include "lib/include/ball.h"
+#include "lib/include/renderer.h"
 #include "lib/ball.cpp"
 #include "lib/include/collision.h"
 
+void rainbow(Ball& ball, float t) {
+    float r = sin(t);
+    float g = sin(t + 0.33f * 2.0f * M_PI);
+    float b = sin(t + 0.66f * 2.0f * M_PI);
+    r = r * r * 255.0f;
+    g = g * g * 255.0f;
+    b = b * b * 255.0f;
+    ball.color = sf::Color(r, g, b);
+}
+
 int main()
 {
-    int NUM_BALLS = 100;
+    int NUM_BALLS = 1000;
 
-    int winX = 800;
-    int winY = 700;
+    float winX = 800.0f;
+    float winY = 700.0f;
     sf::RenderWindow window(sf::VideoMode(winX, winY), "balls");
-    double rad = 5.0;
+    double rad = 3.0;
 
-    int startX = 200;
-    // int startY = 600;
-    int startY = 200;
-    double g = 0.0981;
+    float startX = 500.0f;
+    float startY = 200.0f;
 
-    // std::random_device rd;
-    std::mt19937 gen(0);
-    std::uniform_real_distribution<> dis(-0.1f,0.1f);
+    const int framerate = 60;
+    window.setFramerateLimit(framerate);
 
     srand(time(NULL));
 
-    std::vector<Ball> balls;
+    Handler handler(winX, winY, NUM_BALLS);
+    Renderer renderer(window);
 
-    // for (int i = 0; i < NUM_BALLS; i++) {
-        double initVelY = -0.1;
-        // double velX = 0.2;
-        double velX = 0.3f;
-        // double rad = 5;
-    //     // Ball ball(initVelY, velX, rad, startX, startY);
-    //     // balls.push_back(ball);
-    //     balls.push_back(Ball(initVelY, velX, rad, startX, startY));
-    //     sf::sleep(sf::Time(sf::microseconds(10000)));
-    // }
-
-    int count = 0;
-
-//     for (int i = 0; i < NUM_BALLS; i++) {
-//         // float initVelY = -0.3;
-//         float initVelY = -1*((double)(rand()%300)/1000) - 0.1;
-//         // float velX = 0.5;
-//         float velX = pow(-1, rand()%2)*((double)(rand()%200)/1000 + 0.05);
-//         float rad = 5;
-//         Ball ball(initVelY, velX, rad, startX, startY);
-//         balls.push_back(ball);
-//     }
-
-    // int count = 0;
-
+    handler.setFrameDt(framerate);
+    
+    sf::Clock clock;
     while (window.isOpen())
     {
         sf::Event event;
@@ -70,44 +57,19 @@ int main()
                 window.close();
         }
 
-        if(count <= NUM_BALLS * 100)
-        {
-            if(count % 100 == 0)
-                balls.push_back(Ball(initVelY, velX, rad, startX, startY));
+        float spawn_delay = 0.05f;
 
-        }
-            // sf::sleep(sf::Time(sf::microseconds(100)));
-        count++;
-
-        window.clear();
-
-        // for(auto& ball1 : balls) {
-        //     moveBall(ball1, g, winX, winY);
-        //     window.draw(ball1.drawing);
-        // }
-
-        // if(count % 10 == 0)
-        
-        for(auto& ball : balls) {
-
-            ball.move(g, winX, winY);
-        }
-        for (auto& ball1 : balls)
-        {
-            for(auto& ball2 : balls)
-            {
-                resolve_collisions(ball1 ,ball2);
-                // window.draw(ball1.drawing);
-                // window.draw(ball2.drawing);
-            }
+        if (handler.getNumBalls() < NUM_BALLS && clock.getElapsedTime().asSeconds() >= spawn_delay) {
+            clock.restart();
+            auto& newBall = handler.addNewBall({startX, startY}, rad);
+            newBall.setVelocity({450.0f, 100.0f}, handler.getFrameDt());
+            rainbow(newBall, handler.getTime());
         }
 
-        for(auto& ball : balls)
-            window.draw(ball.getDrawing());
-
-
+        handler.update();
+        window.clear(sf::Color::Black);
+        renderer.render(handler);     
         window.display();
-
 
     }
 

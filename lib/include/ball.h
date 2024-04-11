@@ -1,131 +1,160 @@
 #pragma once
-#include<SFML/Graphics.hpp> 
+#include <SFML/Graphics.hpp> 
 #include <cmath> 
 #include <time.h>
-#include<random>
+#include <random>
 
 
 
-class Ball {
-    public:
+struct Ball {
+    sf::Vector2f currentPosition;
+    sf::Vector2f lastPosition;
+    sf::Vector2f acceleration;
+    float radius;
+    sf::Color color = sf::Color::White;
 
-        Ball(double initVY, double vX, double rad, double startX, double startY) {
-            initVelY = initVY;
-            velY = initVY;
-            velX = vX;
-            time = 0;
-            sf::CircleShape shape(rad);
-            std::random_device rd;
-            std::mt19937 gen(rd());
-            std::uniform_int_distribution<> dis(0,255);
-            shape.setFillColor(sf::Color(dis(gen),dis(gen),dis(gen)));
-            // shape.setFillColor(sf::Color::White);
-            shape.setOrigin(shape.getRadius(),shape.getRadius());
-            shape.setPosition(startX, startY);
-            drawing = shape;
-        }
+    Ball() = default;
+    Ball(sf::Vector2f pos, float rad)
+        : currentPosition{pos}
+        , lastPosition{pos}
+        , acceleration{0.0f, 0.0f}
+        , radius{rad}
+    {}
         
-        sf::Vector2f getPos() {
-            return drawing.getPosition();// + sf::Vector2f(getRad(), getRad());
+    void update(float dt) {
+        sf::Vector2f disp = currentPosition - lastPosition;
+        lastPosition = currentPosition;
+        currentPosition = currentPosition + disp + acceleration * (dt * dt);
+        acceleration = {};
+    }
+
+    void accelerate(sf::Vector2f a) {
+        acceleration += a;
+    }
+
+    void setVelocity(sf::Vector2f vel, float dt) {
+        lastPosition = currentPosition - vel * dt;
+    }
+
+    void incVelocity(sf::Vector2f vel, float dt) {
+        lastPosition -= vel * dt;
+    }
+};
+
+class Handler {
+    public: 
+        Handler() = default;
+        Handler(float winX, float winY, int nBalls)
+            : windowX{winX}
+            , windowY{winY}
+            , numBalls{nBalls}
+        {}
+
+        void update() {
+            time += frame_dt;
+            //for (int i = 0; i < 4; i++) {
+                applyGravity();
+                checkCollisions(frame_dt);
+                checkBoundaries(frame_dt);
+                updateBalls(frame_dt);
+            //}
         }
 
-        void setPos(double x, double y) {
-            drawing.setPosition(x, y);
+        Ball& addNewBall(sf::Vector2f pos, float rad) {
+            return balls.emplace_back(pos, rad);
         }
 
-        sf::Vector2f getVel() {
-            return sf::Vector2f(velX, velY);
+        std::vector<Ball>& getBalls() {
+            return balls;
         }
 
-        void setVel(double vX, double vY) {
-            velX = vX;
-            velY = vY;
+        int getNumBalls() {
+            return balls.size();
         }
 
-        double getRad() {
-            return drawing.getRadius();
-        } 
-
-        double getInitVelY() {
-            return initVelY;
+        void setFrameDt(float framerate) {
+            frame_dt = 1.0f / framerate;
         }
 
-        void setInitVelY(double initvY) {
-            initVelY = initvY;
+        float getFrameDt() {
+            return frame_dt;
         }
 
-        double getT() {
+        float getTime() {
             return time;
         }
 
-        void setT(double t) {
-            time = t;
-        }
+    private:
+        sf::Vector2f gravity = {0.0f, 981.0f};
+        std::vector<Ball> balls;
+        float windowX;
+        float windowY;
+        int numBalls;
+        float time = 0.0f;
+        float frame_dt = 0.0f;
 
-        sf::CircleShape getDrawing() {
-            return drawing;
-        }
 
-        void moveDrawing(double x, double y) {
-            drawing.move(x, y);
+        void applyGravity() {
+            for (auto& ball : balls) {
+                ball.accelerate(gravity);
+            }
         }
         
-
-        // bool checkGround(int winY) {
-        double checkGround(int winY) {
-            // return (getPos().y + getRad() >= winY);
-            return (winY - (getPos().y + getRad()));
-        }
-
-        // bool checkLeftWall() {
-        double checkLeftWall() {
-            // return (getPos().x <= 0);
-            return (getPos().x - getRad());
-        }
-
-        // bool checkRightWall(int winX) {
-        double checkRightWall(int winX) {
-            // return (getPos().x + getRad() >= winX);
-            return (winX - (getPos().x + getRad()));
-
-        }
-
-        void move(double g, int winX, int winY) {
-            time += 0.001;
-            velY = initVelY + g*time;
-            float moveX = velX;
-            float moveY = velY;
-
-            if (checkGround(winY) < 0) {
-                initVelY = -0.8*abs(velY);
-                velY = initVelY + checkGround(winY);
-                time = 0;
-                // drawing.setPosition(getPos().x, winY - getRad());
-                moveY = winY - getPos().y - getRad();
-                velX *= 0.995;
+        void updateBalls(float dt) {
+            for (auto& ball : balls) {
+                ball.update(dt);
             }
-
-            if (checkLeftWall() < 0) {
-                // drawing.setPosition(getRad(), getPos().y);
-                moveX = getPos().x;
-                velX *= -0.95;
-
-            }
-
-            if (checkRightWall(winX) < 0) {
-                // drawing.setPosition(winX - getRad(), getPos().y);
-                moveX = winX - getPos().x - getRad();
-                velX *= -0.95;
-            }
-
-            drawing.move(moveX, moveY);
         }
-    
-    private:
-        double initVelY;
-        double velY;
-        double velX;
-        double time;
-
-        sf::CircleShape drawing;
+        
+        void checkCollisions(float dt) {
+            float dampC = 0.75f;
+            for (auto& ball_1 : balls) {
+                for (auto& ball_2 : balls) {
+                    if (&ball_1 != &ball_2) {
+                        sf::Vector2f v = ball_1.currentPosition - ball_2.currentPosition;
+                        sf::Vector2f b1Vel = (ball_1.currentPosition - ball_1.lastPosition) / dt;
+                        sf::Vector2f b2Vel = (ball_2.currentPosition - ball_2.lastPosition) / dt;
+                        float dist = sqrt(v.x * v.x + v.y * v.y);
+                        float minDist = ball_1.radius + ball_2.radius;
+                        if (dist < minDist) {
+                            sf::Vector2f n;
+                            if (dist == 0) {
+                                n = {1, 1};
+                            } else {
+                                n = v / dist;
+                            }
+                            float delta = 0.5f * dampC * (dist - minDist);
+                            ball_1.currentPosition -= 0.5f * delta * n;
+                            ball_2.currentPosition += 0.5f * delta * n;
+                        }
+                    }
+                }
+            }
+        }
+        void checkBoundaries(float dt) {
+            for (auto& ball : balls) {
+                sf::Vector2f pos = ball.currentPosition;
+                sf::Vector2f lastPos = ball.lastPosition;
+                sf::Vector2f vel = dt * (pos - lastPos);
+                float dampC = 0.75f;
+                float moveX = 0.0f;
+                float moveY = 0.0f;
+                if (pos.y + 2 * ball.radius > windowY) {
+                    moveY = -2 * ball.radius + windowY - pos.y;
+                    ball.lastPosition = {lastPos.x, pos.y + dampC * vel.y};
+                    if (vel.y < 0.01f) {
+                        ball.lastPosition = {lastPos.x + dampC * vel.x, pos.y + moveY};
+                    }
+                }
+                if (pos.x < 0.0f) {
+                    moveX = -pos.x;
+                    ball.lastPosition = {pos.x + vel.x, lastPos.y};
+                }
+                else if (pos.x + 2 * ball.radius > windowX) {
+                    moveX = -2 * ball.radius + windowX - pos.x;
+                    ball.lastPosition = {pos.x + vel.x, lastPos.y};
+                }
+                ball.currentPosition += {moveX, moveY};
+            }
+        }
 };

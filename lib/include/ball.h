@@ -1,8 +1,5 @@
 #pragma once
 #include <SFML/Graphics.hpp> 
-#include <cmath> 
-#include <time.h>
-#include <random>
 
 
 
@@ -52,12 +49,13 @@ class Handler {
 
         void update() {
             time += frame_dt;
-            //for (int i = 0; i < 4; i++) {
+            int num_steps = 2;
+            for (int i = 0; i < num_steps; i++) {
                 applyGravity();
-                checkCollisions(frame_dt);
-                checkBoundaries(frame_dt);
-                updateBalls(frame_dt);
-            //}
+                checkCollisions();
+                checkBoundaries(frame_dt / num_steps);
+                updateBalls(frame_dt / num_steps);
+            }
         }
 
         Ball& addNewBall(sf::Vector2f pos, float rad) {
@@ -106,14 +104,12 @@ class Handler {
             }
         }
         
-        void checkCollisions(float dt) {
+        void checkCollisions() {
             float dampC = 0.75f;
             for (auto& ball_1 : balls) {
                 for (auto& ball_2 : balls) {
                     if (&ball_1 != &ball_2) {
                         sf::Vector2f v = ball_1.currentPosition - ball_2.currentPosition;
-                        sf::Vector2f b1Vel = (ball_1.currentPosition - ball_1.lastPosition) / dt;
-                        sf::Vector2f b2Vel = (ball_2.currentPosition - ball_2.lastPosition) / dt;
                         float dist = sqrt(v.x * v.x + v.y * v.y);
                         float minDist = ball_1.radius + ball_2.radius;
                         if (dist < minDist) {

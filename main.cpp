@@ -1,12 +1,7 @@
 #include <string>
 #include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-
+#include <thread> 
 #include <cmath> 
-#include <vector>
-#include <random>
 
 #include "lib/include/ball.h"
 #include "lib/include/renderer.h"
@@ -25,20 +20,20 @@ void rainbow(Ball& ball, float t) {
 
 int main()
 {
-    int NUM_BALLS = 1000;
+    int NUM_BALLS = 1500;
 
     float winX = 800.0f;
     float winY = 700.0f;
     sf::RenderWindow window(sf::VideoMode(winX, winY), "balls");
-    double rad = 3.0;
+    double rad = 10.0;
 
-    float startX = 500.0f;
+    float startX = 200.0f;
     float startY = 200.0f;
+    sf::Vector2f startVel = {400.0f, 100.0f};
 
+    float spawn_delay = 0.02f;
     const int framerate = 60;
     window.setFramerateLimit(framerate);
-
-    srand(time(NULL));
 
     Handler handler(winX, winY, NUM_BALLS);
     Renderer renderer(window);
@@ -57,12 +52,10 @@ int main()
                 window.close();
         }
 
-        float spawn_delay = 0.05f;
-
         if (handler.getNumBalls() < NUM_BALLS && clock.getElapsedTime().asSeconds() >= spawn_delay) {
             clock.restart();
             auto& newBall = handler.addNewBall({startX, startY}, rad);
-            newBall.setVelocity({450.0f, 100.0f}, handler.getFrameDt());
+            newBall.setVelocity(startVel, handler.getFrameDt());
             rainbow(newBall, handler.getTime());
         }
 

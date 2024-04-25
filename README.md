@@ -14,3 +14,6 @@ smoothly even up to ~1500 objects.
 
 ### Future Improvements: <br />
 The final step in this project would be to integrate the use of threads to further improve efficiency. The goal is to be able to handle at least 5000 objects smoothly.
+<p align="center">
+<img src="https://private-user-images.githubusercontent.com/55002913/325752543-64aac3f2-8442-4b3d-a0da-171f5705d9b4.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MTQwNzUyMTIsIm5iZiI6MTcxNDA3NDkxMiwicGF0aCI6Ii81NTAwMjkxMy8zMjU3NTI1NDMtNjRhYWMzZjItODQ0Mi00YjNkLWEwZGEtMTcxZjU3MDVkOWI0LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA0MjUlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwNDI1VDE5NTUxMlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTRmYTM3N2E5ODVjZDMzY2QyZDYxNjEwZmNjOWU0NDcwOTQ3Y2ViNDBlYjJiZTM5ODUyZTIyMGE2MTA1NjBmNTAmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.V2Y0I2epy41nRyu7Td3OPq6xHuE9A0YLTVwRcr25fWA" alt="drawing" width="400"/>
+</p>
